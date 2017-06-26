@@ -1014,3 +1014,14 @@ update()
 
 if __name__ == "__main__":
     test()
+
+
+
+#Additions
+class Vertex(Circle):
+   def __init__(self, center, radius,label):
+      Circle.__init__(self,center,radius)
+      self.label = label
+   
+    
+   
