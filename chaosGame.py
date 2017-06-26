@@ -36,7 +36,7 @@ def point_placement(original_points,current_point,number_of_points,win):
     print "click to place your points"
 
     for i in range (0,int(number_of_points)):
-        current_point_c = Vertex(win.getMouse(),1,i+1)
+        current_point_c = Vertex(win.getMouse(),1,i)
         current_point_c.draw(win)
         original_points.append(current_point_c)
 
