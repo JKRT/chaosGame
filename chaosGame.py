@@ -4,15 +4,19 @@ from random import randint
 def main():
 
     mode = raw_input("Enter mode: \t\t")
-    win = GraphWin("chaosGame", 1024, 1024)  
+    win = GraphWin("chaosGame", 1024, 1024)
+
+    draw_cordinate_system(win)
 
     if mode == "triangle":
         Sierpinski_triangle(win)
     elif mode == "square":
         square(win)
     elif mode == "pentagon":
-        pentagon(win)
-    
+        pentagon(win,not_same_vertex_twice)
+    elif mode == "hexagon":
+        hexagon(win)
+        
 
 def point_placement(original_points,current_point,number_of_points,win):
 
@@ -29,6 +33,21 @@ def point_placement(original_points,current_point,number_of_points,win):
     current_point.draw(win)
         
     return current_point
+
+
+def not_same_vertex_twice(comp_point,prev_comp_point,
+                          current_point,original_points,number_of_points,win):
+
+    for i in range(0,10000000):
+        #Make sure that a new point is not selected twice in a row
+        while comp_point.center.x == prev_comp_point.center.x and comp_point.center.y == prev_comp_point.center.y :
+                    comp_point = original_points[randint(0,int(number_of_points) - 1)]
+
+        prev_comp_point = comp_point
+        current_point = Circle(Point(current_point.center.x + (comp_point.center.x - current_point.center.x) / 2, 
+                                     current_point.center.y + (comp_point.center.y - current_point.center.y) / 2 ),1)
+        current_point.draw(win)
+
   
 def Sierpinski_triangle(win):
     
@@ -71,9 +90,7 @@ def square(win):
                           number_of_points,
                           win)
 
-
-
-def pentagon(win):
+def pentagon(win,constraint):
 
     number_of_points = 5
     original_points = []
@@ -82,7 +99,8 @@ def pentagon(win):
 
     current_point = point_placement(original_points,
                                     Circle(Point(0,0),1),
-                                    number_of_points,win)
+                                    number_of_points,
+                                    win)
 
     #Temporary values before the loop
 
@@ -91,7 +109,28 @@ def pentagon(win):
     #The first point can be just any point
 
     comp_point = original_points[randint(0,int(number_of_points) - 1)]
-    
+
+    constraint(comp_point,prev_comp_point,current_point,
+               original_points,number_of_points,win)
+
+def hexagon(win):
+
+    number_of_points = 6
+    original_points = []
+
+    print "Click to select starting point"
+
+
+    current_point = point_placement(original_points,
+                                    Circle(Point(0,0),1),
+                                    number_of_points,
+                                    win)
+
+    #Temporary values before loop
+    prev_comp_point = Circle(Point(0,0),1)
+
+    comp_point = original_points[randint(0,int(number_of_points) -1)]
+
     not_same_vertex_twice(comp_point,
                           prev_comp_point,
                           current_point,
@@ -99,20 +138,29 @@ def pentagon(win):
                           number_of_points
                           ,win)
 
+
+def draw_cordinate_system(win):
+
+    xaxis = Line( Point(0,512), Point(1024,512))
+    xaxis.draw(win)
+
+    yaxis = Line (Point(512,0), Point(512,1024))
+    yaxis.draw(win)
+
+    origo = Circle(Point(512,512),3)
+    origo.draw(win)
+
+    for i in range(0,1024):
+        if i % 64 == 0:
+            stepLineX = Line(Point(0,i), Point(1024,i))
+            stepLineY = Line(Point(i,0),Point(i,1024))
+
+            stepLineX.draw(win)
+            stepLineY.draw(win)
         
-def not_same_vertex_twice(comp_point,prev_comp_point,current_point,original_points,number_of_points,win):
-       for i in range(0,10000000):
-        #Make sure that a new point is not selected twice in a row
-        while comp_point.center.x == prev_comp_point.center.x and comp_point.center.y == prev_comp_point.center.y :
-                    comp_point = original_points[randint(0,int(number_of_points) - 1)]
-
-        prev_comp_point = comp_point
-        current_point = Circle(Point(current_point.center.x + (comp_point.center.x - current_point.center.x) / 2, 
-                                     current_point.center.y + (comp_point.center.y - current_point.center.y) / 2 ),1)
-        current_point.draw(win)
-
-
-
         
 
-main()     
+    
+
+
+main()
