@@ -5,20 +5,22 @@ import numpy as np
 
 def main():
 
-    mode = raw_input("Enter mode: \t\t")
+   
     colour_mode = raw_input("Enter colour mode: \t") # Night, Day
+    colour_mode = colour_mode.lower()
+    
     win = GraphWin("chaosGame", 1024, 1024)
     object_colour = 'black'
-
+  
+    mode = raw_input("Enter mode: \t\t")
+    mode = mode.lower()
     
-    if colour_mode == "Night":
+    if colour_mode == "night":
         win.setBackground('black')
         object_colour = 'white'
-    elif raw_input("Do you want a grid? \t") == "Yes": # Yes, No
-        draw_cordinate_system(win)
 
-  #  if not colour_mode == "Night":    
-  #      draw_cordinate_system(win)
+    if raw_input("Do you want a grid? \n y for yes n for no \n").lower() == "y":
+        draw_cordinate_system(win,object_colour)
 
     if mode == "triangle":
         Sierpinski_triangle(win, object_colour)
@@ -206,24 +208,29 @@ def hexagon(win, colour):
                           ,win, colour)
 
 
-def draw_cordinate_system(win):
+def draw_cordinate_system(win,object_colour):
 
+    def color_and_draw(line):
+        line.setFill(object_colour)
+        line.setOutline(object_colour)
+        line.setWidth(2)
+        line.draw(win)
+    
     xaxis = Line( Point(0,512), Point(1024,512))
-    xaxis.draw(win)
 
+    color_and_draw(xaxis)
+   
     yaxis = Line (Point(512,0), Point(512,1024))
-    yaxis.draw(win)
+    color_and_draw(yaxis)
 
-    origo = Circle(Point(512,512),3)
+    origo = Circle(Point(512,512),5)
+    origo.setFill(object_colour)
     origo.draw(win)
 
     for i in range(0,1024):
         if i % 64 == 0:
-            stepLineX = Line(Point(0,i), Point(1024,i))
-            stepLineY = Line(Point(i,0),Point(i,1024))
-
-            stepLineX.draw(win)
-            stepLineY.draw(win)
+            color_and_draw(Line(Point(0,i), Point(1024,i)))
+            color_and_draw(Line(Point(i,0),Point(i,1024)))
         
 
 ############# Barnsley Fern #############
