@@ -1,3 +1,3 @@
 # chaosGame
 
-Generate images utilizing the chaosgame
+Generate images of fractals using the chaosgame
