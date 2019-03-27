@@ -2,24 +2,18 @@ from graphics import *
 from random import randint
 import numpy as np
 
-
 def main():
     colour_mode = raw_input("Enter colour mode: \t") # Night, Day
     colour_mode = colour_mode.lower()
-    
     win = GraphWin("chaosGame", 1024, 1024)
     object_colour = 'black'
-  
     mode = raw_input("Enter mode: \t\t")
     mode = mode.lower()
-    
     if colour_mode == "night":
         win.setBackground('black')
         object_colour = 'white'
-
     if raw_input("Do you want a grid? \n y for yes n for no \n").lower() == "y":
         draw_cordinate_system(win,object_colour)
-
     if mode == "triangle":
         Sierpinski_triangle(win, object_colour)
     elif mode == "square":
@@ -49,14 +43,11 @@ def point_placement(original_points,current_point,number_of_points,win, colour):
         current_point_c.setFill(colour)
         current_point_c.draw(win)
         original_points.append(current_point_c)
-
     print "Click to select starting point!"
-
     current_point = Vertex(win.getMouse(),0.0001,0)
     current_point.setOutline(colour)
     current_point.setFill(colour)
     current_point.draw(win)
-        
     return current_point
 
 
@@ -64,26 +55,17 @@ def point_placement(original_points,current_point,number_of_points,win, colour):
 def space_pentagon(comp_point,prev_comp_point,current_point,original_points,number_of_points,win, colour):
     curr = 0
     prev = 0
-    
     done = True
-
     for p in original_points:
         print p.label
-    
-    
     for i in range(0,100000000):
-        
         done = False
         while not done:
             comp_point = original_points[randint(0,int(number_of_points) - 1)]
-        
             if not comp_point.label == curr + 1 % 5 and not comp_point.label == prev + 4 % 5:
                 done = True
-
         prev = curr
-        
         curr = comp_point.label
-
         current_point = Circle(Point(current_point.center.x + (comp_point.center.x - current_point.center.x) / 2, 
                                      current_point.center.y + (comp_point.center.y - current_point.center.y) / 2 ),1)
         current_point.setOutline(colour)
@@ -102,21 +84,17 @@ def not_same_vertex_twice(comp_point,prev_comp_point,
         prev_comp_point = comp_point
         current_point = Circle(Point(current_point.center.x + (comp_point.center.x - current_point.center.x) / 2, 
                                      current_point.center.y + (comp_point.center.y - current_point.center.y) / 2 ),0.00001)
-
         current_point.setOutline(colour)
         current_point.setFill(colour)
         current_point.draw(win)
 
   
 def Sierpinski_triangle(win, colour):
-    
     number_of_points = 3
     original_points = []
-
     current_point = point_placement(original_points,
                     Circle(Point(0,0),0.0001),
                                     number_of_points,win, colour)
-   
     for i in range(0,10000000): 
         comp_point = original_points[randint(0,int(number_of_points) - 1)]
         current_point = Circle(Point(current_point.center.x + (comp_point.center.x - current_point.center.x) / 2, 
@@ -126,24 +104,16 @@ def Sierpinski_triangle(win, colour):
         current_point.draw(win)
 
 def square(win, colour):
-
     number_of_points = 4
     original_points = []
-
     print "Click to select starting point!"
-
     current_point = point_placement(original_points,
                                     Circle(Point(0,0),0.0001),
                                     number_of_points,win, colour)
-
     #Temporary values before the loop
-
     prev_comp_point = Circle(Point(0,0),1)
-
     #The first point can be just any point
-
     comp_point = original_points[randint(0,int(number_of_points) - 1)]
-
     not_same_vertex_twice(comp_point,
                           prev_comp_point,
                           current_point,
@@ -152,46 +122,31 @@ def square(win, colour):
                           win, colour)
 
 def pentagon(win,constraint, colour):
-
     number_of_points = 5
     original_points = []
-
     print "Click to select starting point!"
-
     current_point = point_placement(original_points,
                                     Circle(Point(0,0),0.0001),
                                     number_of_points,
                                     win, colour)
-
     #Temporary values before the loop
-
     prev_comp_point = Vertex(Point(0,0),1,0)
-
     #The first point can be just any point
-
     comp_point = original_points[randint(0,int(number_of_points) - 1)]
-
     constraint(comp_point,prev_comp_point,current_point,
                original_points,number_of_points,win, colour)
 
 def hexagon(win, colour):
-
     number_of_points = 6
     original_points = []
-
     print "Click to select starting point"
-
-
     current_point = point_placement(original_points,
                                     Circle(Point(0,0),1),
                                     number_of_points,
                                     win, colour)
-
     #Temporary values before loop
     prev_comp_point = Circle(Point(0,0),1)
-
     comp_point = original_points[randint(0,int(number_of_points) -1)]
-
     not_same_vertex_twice(comp_point,
                           prev_comp_point,
                           current_point,
@@ -199,26 +154,19 @@ def hexagon(win, colour):
                           number_of_points
                           ,win, colour)
 
-
 def draw_cordinate_system(win,object_colour):
-
     def color_and_draw(line):
         line.setFill(object_colour)
         line.setOutline(object_colour)
         line.setWidth(2)
         line.draw(win)
-    
     xaxis = Line( Point(0,512), Point(1024,512))
-
     color_and_draw(xaxis)
-   
     yaxis = Line (Point(512,0), Point(512,1024))
     color_and_draw(yaxis)
-
     origo = Circle(Point(512,512),5)
     origo.setFill(object_colour)
     origo.draw(win)
-
     for i in range(0,1024):
         if i % 64 == 0:
             color_and_draw(Line(Point(0,i), Point(1024,i)))
@@ -259,15 +207,12 @@ def Cartesian_to_Circle(x_array):
     
 def Barnsley_Fern(win, colour):
     cart = np.array([0,0])
-
     for i in range(0,10000000):
         p = Cartesian_to_Circle(cart)
         p.setOutline(colour)
         p.setFill(colour)
         p.draw(win)
-
         r = np.random.uniform(0,100)
-
         if r <= 1:
             cart = f_1(cart)
         elif r <= 86:
@@ -276,5 +221,4 @@ def Barnsley_Fern(win, colour):
             cart = f_3(cart)
         else:
             cart = f_4(cart)
-            
 main()
