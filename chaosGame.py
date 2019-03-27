@@ -4,8 +4,6 @@ import numpy as np
 
 
 def main():
-
-   
     colour_mode = raw_input("Enter colour mode: \t") # Night, Day
     colour_mode = colour_mode.lower()
     
@@ -32,25 +30,19 @@ def main():
         hexagon(win, object_colour)
     elif mode == "fern":
         Barnsley_Fern(win, object_colour)
-
-
+         
 def compare_points(p1,p2):
     if p1.x == p2.x and p1.y == p2.y:
         return True
-
     return False
-
 
 def compare_vertexes(v1,v2):
     if v1.label == v2.label:
         return True
-
     return False
 
 def point_placement(original_points,current_point,number_of_points,win, colour):
-
     print "click to place your points"
-
     for i in range (0,int(number_of_points)):
         current_point_c = Vertex(win.getMouse(),1,i)
         current_point_c.setOutline(colour)
@@ -59,7 +51,7 @@ def point_placement(original_points,current_point,number_of_points,win, colour):
         original_points.append(current_point_c)
 
     print "Click to select starting point!"
-        
+
     current_point = Vertex(win.getMouse(),0.0001,0)
     current_point.setOutline(colour)
     current_point.setFill(colour)
@@ -124,7 +116,7 @@ def Sierpinski_triangle(win, colour):
     current_point = point_placement(original_points,
                     Circle(Point(0,0),0.0001),
                                     number_of_points,win, colour)
-
+   
     for i in range(0,10000000): 
         comp_point = original_points[randint(0,int(number_of_points) - 1)]
         current_point = Circle(Point(current_point.center.x + (comp_point.center.x - current_point.center.x) / 2, 
@@ -284,5 +276,5 @@ def Barnsley_Fern(win, colour):
             cart = f_3(cart)
         else:
             cart = f_4(cart)
-    
+            
 main()
