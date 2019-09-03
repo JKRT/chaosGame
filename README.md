@@ -12,3 +12,11 @@ This repository is standalone. The only dependency is graphics.py which is also 
 
 The only requirement is a working version of Python 2 and that the operating system provides 
 the neccessary components for graphics.py.
+
+# An Example. A Fancy Fractal
+
+![](https://raw.githubusercontent.com/JKRT/chaosGame/master/Sierpinski%20triangle.png)
+
+All the best,
+
+John
