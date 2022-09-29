@@ -3,16 +3,16 @@ from random import randint
 import numpy as np
 
 def main():
-    colour_mode = raw_input("Enter colour mode: \t") # Night, Day
+    colour_mode = input("Enter colour mode: \t") # Night, Day
     colour_mode = colour_mode.lower()
     win = GraphWin("chaosGame", 1024, 1024)
     object_colour = 'black'
-    mode = raw_input("Enter mode: \t\t")
+    mode = input("Enter mode: \t\t")
     mode = mode.lower()
     if colour_mode == "night":
         win.setBackground('black')
         object_colour = 'white'
-    if raw_input("Do you want a grid? \n y for yes n for no \n").lower() == "y":
+    if input("Do you want a grid? \n y for yes n for no \n").lower() == "y":
         draw_cordinate_system(win,object_colour)
     if mode == "triangle":
         Sierpinski_triangle(win, object_colour)
@@ -36,14 +36,14 @@ def compare_vertexes(v1,v2):
     return False
 
 def point_placement(original_points,current_point,number_of_points,win, colour):
-    print "click to place your points"
+    print("click to place your points")
     for i in range (0,int(number_of_points)):
         current_point_c = Vertex(win.getMouse(),1,i)
         current_point_c.setOutline(colour)
         current_point_c.setFill(colour)
         current_point_c.draw(win)
         original_points.append(current_point_c)
-    print "Click to select starting point!"
+    print("Click to select starting point!")
     current_point = Vertex(win.getMouse(),0.0001,0)
     current_point.setOutline(colour)
     current_point.setFill(colour)
@@ -57,7 +57,7 @@ def space_pentagon(comp_point,prev_comp_point,current_point,original_points,numb
     prev = 0
     done = True
     for p in original_points:
-        print p.label
+        print(p.label)
     for i in range(0,100000000):
         done = False
         while not done:
@@ -106,7 +106,7 @@ def Sierpinski_triangle(win, colour):
 def square(win, colour):
     number_of_points = 4
     original_points = []
-    print "Click to select starting point!"
+    print("Click to select starting point!")
     current_point = point_placement(original_points,
                                     Circle(Point(0,0),0.0001),
                                     number_of_points,win, colour)
@@ -124,7 +124,7 @@ def square(win, colour):
 def pentagon(win,constraint, colour):
     number_of_points = 5
     original_points = []
-    print "Click to select starting point!"
+    print("Click to select starting point!")
     current_point = point_placement(original_points,
                                     Circle(Point(0,0),0.0001),
                                     number_of_points,
@@ -139,7 +139,7 @@ def pentagon(win,constraint, colour):
 def hexagon(win, colour):
     number_of_points = 6
     original_points = []
-    print "Click to select starting point"
+    print("Click to select starting point")
     current_point = point_placement(original_points,
                                     Circle(Point(0,0),1),
                                     number_of_points,
